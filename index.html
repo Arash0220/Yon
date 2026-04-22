@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YONINAH.SYS // BIRTHDAY PROTOCOL </title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Fredoka+One&family=Righteous&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-pink: #ff00ff;
+      --neon-cyan: #00ffff;
+      --neon-green: #39ff14;
+      --neon-yellow: #ffff00;
+      --bg-dark: #0a0a12;
+      --text-main: #e0e0ff;
+      --crt-scanline: rgba(0,0,0,0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      overflow-x: hidden;
+      min-height: 100vh;
+      cursor: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%2339ff14" opacity="0.8"/></svg>') 8 8, auto;
+    }
+
+    /* Starfield Background */
+    .starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: radial-gradient(circle, #1a1a2e 0%, #0a0a12 100%); }
+    .star { position: absolute; background: white; border-radius: 50%; opacity: 0.6; animation: twinkle 3s infinite alternate; }
+    @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+    /* CRT Overlay */
+    .crt-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; background: repeating-linear-gradient(0deg, var(--crt-scanline) 0px, var(--crt-scanline) 2px, transparent 2px, transparent 4px); box-shadow: inset 0 0 50px rgba(0,0,0,0.7); animation: crt-flicker 0.15s infinite alternate; }
+    @keyframes crt-flicker { 0% { opacity: 0.95; } 100% { opacity: 1; } }
+
+    /* Main Container */
+    .main-container { max-width: 800px; margin: 40px auto; padding: 30px; background: rgba(10, 10, 25, 0.85); border: 3px solid var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 20px rgba(0,255,255,0.1); position: relative; }
+    
+    h1 { 
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 2.5rem;
+      text-transform: uppercase; 
+      text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 30px var(--neon-cyan);
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    h2 {
+      font-family: 'Righteous', sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-cyan);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    
+    .neon-text { 
+      font-family: 'Righteous', sans-serif;
+      text-transform: uppercase; 
+      text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); 
+      margin-bottom: 20px;
+    }
+
+    /* Marquee */
+    .marquee-wrap { overflow: hidden; white-space: nowrap; background: #000; border-top: 2px solid var(--neon-yellow); border-bottom: 2px solid var(--neon-yellow); padding: 5px 0; margin: 20px 0; }
+    .marquee { display: inline-block; animation: marquee 15s linear infinite; color: var(--neon-yellow); font-size: 1.4rem; letter-spacing: 2px; font-family: 'Fredoka One', sans-serif; font-weight: bold; }
+    @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    .blink { animation: blink-anim 1s step-end infinite; }
+    @keyframes blink-anim { 50% { opacity: 0; } }
+
+    /* Buttons */
+    .retro-btn { 
+      background: #2a2a3a; 
+      border: 3px outset var(--neon-green); 
+      color: var(--neon-green); 
+      padding: 12px 24px; 
+      font-family: 'Righteous', sans-serif; 
+      font-size: 0.95rem; 
+      font-weight: bold;
+      cursor: pointer; 
+      margin: 10px; 
+      transition: all 0.2s; 
+      box-shadow: 4px 4px 0 #111; 
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .retro-btn:hover { 
+      transform: translate(2px, 2px); 
+      box-shadow: 2px 2px 0 #111; 
+      background: #33334a; 
+      border-color: var(--neon-pink); 
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+    .retro-btn:active { border-style: inset; transform: translate(4px, 4px); box-shadow: none; }
+
+    .hidden { display: none; }
+
+    /* Poem Typewriter */
+    .poem-line { margin: 12px 0; line-height: 1.8; font-size: 1.3rem; opacity: 0; transform: translateY(10px); transition: all 0.5s ease; font-family: 'VT323', monospace; }
+    .poem-line.revealed { opacity: 1; transform: translateY(0); }
+
+    /* Cursor Trail */
+    .cursor-trail { position: absolute; width: 6px; height: 6px; background: var(--neon-pink); border-radius: 50%; pointer-events: none; opacity: 0.8; transition: opacity 0.3s, transform 0.3s; }
+
+    /* Finale & Confetti */
+    .final-reveal { text-align: center; padding: 20px; }
+    .final-reveal h2 { color: var(--neon-yellow); }
+    .confetti { position: absolute; width: 10px; height: 10px; background: var(--neon-pink); opacity: 0.8; border-radius: 2px; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+    .hit-counter { text-align: right; font-size: 0.9rem; color: var(--neon-green); margin-top: 30px; border-top: 1px dashed #444; padding-top: 10px; font-family: 'VT323', monospace; }
+    .hit-counter span { font-family: 'Press Start 2P', cursive; }
+
+    /* 📸 RETRO PHOTO PAGE */
+    #photo-page { text-align: center; }
+    .retro-frame {
+      background: #f4f1e1;
+      padding: 20px 20px 50px 20px;
+      margin: 30px auto;
+      max-width: 400px;
+      box-shadow: 8px 8px 15px rgba(0,0,0,0.5);
+      transform: rotate(-2deg);
+      border: 2px solid #333;
+      position: relative;
+    }
+    .retro-frame::before {
+      content: "PHOTO_01.JPG";
+      position: absolute;
+      top: 5px; left: 5px;
+      font-family: 'VT323', monospace;
+      font-size: 0.8rem;
+      color: #888;
+      transform: rotate(1deg);
+    }
+    .retro-frame img {
+      width: 100%; height: auto;
+      border: 1px solid #999;
+      filter: contrast(1.1) brightness(0.95) sepia(0.2);
+      image-rendering: auto;
+    }
+    .photo-caption {
+      font-family: 'Fredoka One', sans-serif;
+      color: #333;
+      margin-top: 15px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .crt-photo-overlay {
+      position: absolute; top: 20px; left: 20px; right: 20px; bottom: 50px;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 4px);
+      pointer-events: none;
+    }
+
+    .nav-links { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+    /* Audio Configuration Panel - HIDDEN */
+    .audio-config {
+      display: none;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      .main-container { margin: 10px; padding: 15px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.1rem; }
+      .retro-btn { font-size: 0.7rem; padding: 8px 16px; }
+      .retro-frame { transform: none; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="starfield" id="starfield"></div>
+  <div class="crt-overlay"></div>
+
+  <div class="main-container" id="main">
+    <!-- AUDIO CONFIGURATION PANEL -->
+    <div class="audio-config">
+      <h3>🔊 AUDIO CONFIGURATION</h3>
+      <div class="audio-input-group">
+        <label for="clickSound">Button Click Sound (relative path or URL):</label>
+        <input type="text" id="clickSound" placeholder="e.g., clicking.mp3 or https://example.com/click.mp3" value="clicking.mp3">
+      </div>
+      <div class="audio-input-group">
+        <label for="stanzaSound">Stanza Opening Sound (relative path or URL):</label>
+        <input type="text" id="stanzaSound" placeholder="e.g., stanza.mp3 or https://example.com/stanza.mp3" value="stanza.mp3">
+      </div>
+      <div class="audio-input-group">
+        <label for="applapseSound">Applause Sound (relative path or URL):</label>
+        <input type="text" id="applapseSound" placeholder="e.g., applause.mp3 or https://example.com/applause.mp3" value="applause-cheer.mp3">
+      </div>
+    </div>
+
+    <!-- LANDING -->
+    <div id="landing">
+      <h1 class="blink">SYSTEM INITIALIZED</h1>
+      <div class="marquee-wrap">
+        <div class="marquee">*** WELCOME TO THE YONINAH BIRTHDAY PROTOCOL *** SECURE CONNECTION ESTABLISHED *** PREPARING PAYLOAD ***</div>
+      </div>
+      <p style="text-align:center; margin: 20px 0;">
+        This terminal contains a classified message. <br>
+        Decrypt sequence requires 5 authorization clicks.
+      </p>
+      <div style="text-align:center;">
+        <button class="retro-btn" onclick="playClickSound(); startSequence();">[ ENTER TERMINAL ]</button>
+      </div>
+    </div>
+
+    <!-- POEM SEQUENCE -->
+    <div id="sequence" class="hidden">
+      <h2 id="step-title">DECRYPTING...</h2>
+      <div id="poem-container" style="min-height: 300px;"></div>
+      <div style="text-align:center; margin-top: 20px;">
+        <button class="retro-btn hidden" id="next-btn" onclick="playClickSound(); playStanzaSound(); nextStep();">[ CONTINUE ]</button>
+      </div>
+    </div>
+
+    <!-- FINALE -->
+    <div id="finale" class="hidden final-reveal">
+      <h2 class="neon-text blink">*** PAYLOAD DELIVERED ***</h2>
+      <div id="full-poem" style="text-align:left; margin: 30px auto; max-width: 700px;"></div>
+      <div class="nav-links">
+        <button class="retro-btn" onclick="playClickSound(); triggerConfetti();" style="margin-top:20px;">[ CELEBRATE ]</button>
+        <button class="retro-btn" onclick="playClickSound(); showPhoto();" style="margin-top:20px;">[ VIEW PHOTO ARCHIVE ]</button>
+      </div>
+      <div class="hit-counter">
+        VISITORS: <span id="counter">000001</span> | LAST UPDATED: <span id="date"></span>
+      </div>
+    </div>
+
+    <!-- 📸 PHOTO PAGE -->
+    <div id="photo-page" class="hidden">
+      <h2 class="neon-text">YONINAH </h2>
+      <div class="retro-frame">
+        <div class="crt-photo-overlay"></div>
+        <!-- REPLACE 'your-photo.jpg' WITH HER ACTUAL IMAGE FILE NAME -->
+        <img src="Yon's Birthday.jpeg" alt="Yoninah" onerror="this.src='https://placehold.co/400x500/111/ff00ff?text=UPLOAD+IMAGE+HERE';">
+        <div class="photo-caption">
+          "CAPTURED: 1st July 2025<br>FILE SIZE: 6.4MB // <br>STATUS: PRICELESS"
+        </div>
+      </div>
+      <div class="nav-links">
+        <button class="retro-btn" onclick="playClickSound(); backToFinale();">[ RETURN TO TERMINAL ]</button>
+        <button class="retro-btn" onclick="playClickSound(); window.print();">[ PRINT PHOTO ]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIO ELEMENTS -->
+  <audio id="clickAudio" preload="auto">
+    <source src="click.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="stanzaAudio" preload="auto">
+    <source src="stanza.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="applause" preload="auto">
+    <source src="applause-cheer.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Generate stars
+    const starfield = document.getElementById('starfield');
+    for(let i=0; i<80; i++){
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.width = star.style.height = Math.random()*3 + 1 + 'px';
+      star.style.left = Math.random()*100 + '%';
+      star.style.top = Math.random()*100 + '%';
+      star.style.animationDelay = Math.random()*3 + 's';
+      starfield.appendChild(star);
+    }
+
+    document.getElementById('date').textContent = new Date().toLocaleDateString();
+
+    // Cursor trail
+    document.addEventListener('mousemove', (e) => {
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+      document.body.appendChild(trail);
+      setTimeout(() => {
+        trail.style.opacity = '0';
+        trail.style.transform = 'scale(0)';
+        setTimeout(() => trail.remove(), 300);
+      }, 200);
+    });
+
+    // Audio functions
+    function playClickSound() {
+      const clickPath = document.getElementById('clickSound').value;
+      const audio = document.getElementById('clickAudio');
+      audio.src = clickPath;
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log("Click sound play failed"));
+    }
+
+    function playStanzaSound() {
+      const stanzaPath = document.getElementById('stanzaSound').value;
+      const audio = document.getElementById('stanzaAudio');
+      audio.src = stanzaPath;
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log("Stanza sound play failed"));
+    }
+
+    function playApplause() {
+      const applapseePath = document.getElementById('applapseSound').value;
+      const audio = document.getElementById('applause');
+      audio.src = applapseePath;
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log("Applause play failed"));
+    }
+
+    // Poem data
+    const poem = [
+      `I watch you soar through the world,\nVibrant, vivacious and endlessly bold,\nWith a spirit that refuses to let a single moment grow cold.\nEquipped with a quip for everything, \nYou're a running narrative of life that never loses its grip.`,
+      `And when you speak? I'm caught in the awe of it all,\nListening to the way you make the grandest of ideas feel small enough to hold,\nAnd the smallest things feel grand.\nI am often lost in the muted tones and the shadows of doubt,\nwhile you hold a prism to the world's most mundane corners.\nYou don't just see the light; you find the marrow and the meaning,\nthe wild, unvarnished truth of life in every passing breath.`,
+      `You don't just exist; you live, full throttle and wide-eyed,\nAnd seeing that fire within you makes me want to step outside,\nTo reach a little higher, to be a better version of who I am, \nSimply because you believe I can.`,
+      `I am forever grateful that the stars aligned just right, \nThat you chose to share your journey, your laughter, and your light.\nTo be your friend and your companion through these times,\nHas been the most cherished gift I've found in this mundane life of hopes and fears.`,
+      `Happy Birthday Yoninah. I'm so lucky my path led straight to you.`
+    ];
+
+    let currentStep = 0;
+    const titles = ['STANZA 1 // DECODED', 'STANZA 2 // DECODED', 'STANZA 3 // DECODED', 'STANZA 4 // DECODED', 'FINAL TRANSMISSION // DECODED'];
+
+    function startSequence() {
+      document.getElementById('landing').classList.add('hidden');
+      document.getElementById('sequence').classList.remove('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+      revealStep(0);
+    }
+
+    function revealStep(idx) {
+      document.getElementById('step-title').textContent = titles[idx];
+      const container = document.getElementById('poem-container');
+      container.innerHTML = '';
+      
+      const lines = poem[idx].split('\n');
+      lines.forEach((line, i) => {
+        const p = document.createElement('div');
+        p.className = 'poem-line';
+        p.textContent = line;
+        container.appendChild(p);
+        setTimeout(() => p.classList.add('revealed'), i * 250);
+      });
+    }
+
+    function nextStep() {
+      currentStep++;
+      if(currentStep < poem.length) {
+        revealStep(currentStep);
+      } else {
+        showFinale();
+      }
+    }
+
+    function showFinale() {
+      document.getElementById('sequence').classList.add('hidden');
+      document.getElementById('finale').classList.remove('hidden');
+      
+      const fullContainer = document.getElementById('full-poem');
+      poem.forEach(stanza => {
+        const p = document.createElement('p');
+        p.style.marginBottom = '20px';
+        p.style.whiteSpace = 'pre-line';
+        p.textContent = stanza;
+        fullContainer.appendChild(p);
+      });
+
+      // Trigger confetti & play audio
+      setTimeout(triggerConfetti, 500);
+      playApplause();
+    }
+
+    function showPhoto() {
+      document.getElementById('finale').classList.add('hidden');
+      document.getElementById('photo-page').classList.remove('hidden');
+    }
+
+    function backToFinale() {
+      document.getElementById('photo-page').classList.add('hidden');
+      document.getElementById('finale').classList.remove('hidden');
+    }
+
+    function triggerConfetti() {
+      const colors = ['#ff00ff', '#00ffff', '#39ff14', '#ffff00', '#ff6600'];
+      for(let i=0; i<50; i++){
+        const conf = document.createElement('div');
+        conf.className = 'confetti';
+        conf.style.left = Math.random()*100 + 'vw';
+        conf.style.top = '-10px';
+        conf.style.background = colors[Math.floor(Math.random()*colors.length)];
+        conf.style.animationDuration = (Math.random()*2 + 1.5) + 's';
+        conf.style.animationDelay = Math.random()*0.5 + 's';
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 4000);
+      }
+    }
+
+    // Konami code easter egg
+    let konami = [];
+    document.addEventListener('keydown', (e) => {
+      konami.push(e.key);
+      if(konami.length > 10) konami.shift();
+      if(konami.join('') === 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba') {
+        currentStep = 5;
+        showFinale();
+      }
+    });
+  </script>
+</body>
+</html>

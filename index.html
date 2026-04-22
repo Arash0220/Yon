@@ -28,16 +28,14 @@
       cursor: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%2339ff14" opacity="0.8"/></svg>') 8 8, auto;
     }
 
-    /* Starfield Background */
     .starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: radial-gradient(circle, #1a1a2e 0%, #0a0a12 100%); }
     .star { position: absolute; background: white; border-radius: 50%; opacity: 0.6; animation: twinkle 3s infinite alternate; }
     @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
-    /* CRT Overlay */
+    
     .crt-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; background: repeating-linear-gradient(0deg, var(--crt-scanline) 0px, var(--crt-scanline) 2px, transparent 2px, transparent 4px); box-shadow: inset 0 0 50px rgba(0,0,0,0.7); animation: crt-flicker 0.15s infinite alternate; }
     @keyframes crt-flicker { 0% { opacity: 0.95; } 100% { opacity: 1; } }
 
-    /* Main Container */
     .main-container { max-width: 800px; margin: 40px auto; padding: 30px; background: rgba(10, 10, 25, 0.85); border: 3px solid var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 20px rgba(0,255,255,0.1); position: relative; }
     
     h1 { 
@@ -69,7 +67,7 @@
       margin-bottom: 20px;
     }
 
-    /* Marquee */
+   
     .marquee-wrap { overflow: hidden; white-space: nowrap; background: #000; border-top: 2px solid var(--neon-yellow); border-bottom: 2px solid var(--neon-yellow); padding: 5px 0; margin: 20px 0; }
     .marquee { display: inline-block; animation: marquee 15s linear infinite; color: var(--neon-yellow); font-size: 1.4rem; letter-spacing: 2px; font-family: 'Fredoka One', sans-serif; font-weight: bold; }
     @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -77,7 +75,7 @@
     .blink { animation: blink-anim 1s step-end infinite; }
     @keyframes blink-anim { 50% { opacity: 0; } }
 
-    /* Buttons */
+   
     .retro-btn { 
       background: #2a2a3a; 
       border: 3px outset var(--neon-green); 
@@ -105,14 +103,11 @@
 
     .hidden { display: none; }
 
-    /* Poem Typewriter */
     .poem-line { margin: 12px 0; line-height: 1.8; font-size: 1.3rem; opacity: 0; transform: translateY(10px); transition: all 0.5s ease; font-family: 'VT323', monospace; }
     .poem-line.revealed { opacity: 1; transform: translateY(0); }
 
-    /* Cursor Trail */
     .cursor-trail { position: absolute; width: 6px; height: 6px; background: var(--neon-pink); border-radius: 50%; pointer-events: none; opacity: 0.8; transition: opacity 0.3s, transform 0.3s; }
 
-    /* Finale & Confetti */
     .final-reveal { text-align: center; padding: 20px; }
     .final-reveal h2 { color: var(--neon-yellow); }
     .confetti { position: absolute; width: 10px; height: 10px; background: var(--neon-pink); opacity: 0.8; border-radius: 2px; animation: fall linear forwards; }
@@ -121,7 +116,6 @@
     .hit-counter { text-align: right; font-size: 0.9rem; color: var(--neon-green); margin-top: 30px; border-top: 1px dashed #444; padding-top: 10px; font-family: 'VT323', monospace; }
     .hit-counter span { font-family: 'Press Start 2P', cursive; }
 
-    /* 📸 RETRO PHOTO PAGE */
     #photo-page { text-align: center; }
     .retro-frame {
       background: #f4f1e1;
@@ -163,12 +157,10 @@
 
     .nav-links { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
 
-    /* Audio Configuration Panel - HIDDEN */
     .audio-config {
       display: none;
     }
 
-    /* Mobile tweaks */
     @media (max-width: 600px) {
       .main-container { margin: 10px; padding: 15px; }
       h1 { font-size: 1.5rem; }
@@ -184,7 +176,7 @@
   <div class="crt-overlay"></div>
 
   <div class="main-container" id="main">
-    <!-- AUDIO CONFIGURATION PANEL -->
+    
     <div class="audio-config">
       <h3>🔊 AUDIO CONFIGURATION</h3>
       <div class="audio-input-group">
@@ -201,7 +193,7 @@
       </div>
     </div>
 
-    <!-- LANDING -->
+   
     <div id="landing">
       <h1 class="blink">SYSTEM INITIALIZED</h1>
       <div class="marquee-wrap">
@@ -216,7 +208,7 @@
       </div>
     </div>
 
-    <!-- POEM SEQUENCE -->
+  
     <div id="sequence" class="hidden">
       <h2 id="step-title">DECRYPTING...</h2>
       <div id="poem-container" style="min-height: 300px;"></div>
@@ -225,7 +217,7 @@
       </div>
     </div>
 
-    <!-- FINALE -->
+   
     <div id="finale" class="hidden final-reveal">
       <h2 class="neon-text blink">*** PAYLOAD DELIVERED ***</h2>
       <div id="full-poem" style="text-align:left; margin: 30px auto; max-width: 700px;"></div>
@@ -238,12 +230,12 @@
       </div>
     </div>
 
-    <!-- 📸 PHOTO PAGE -->
+    
     <div id="photo-page" class="hidden">
       <h2 class="neon-text">YONINAH </h2>
       <div class="retro-frame">
         <div class="crt-photo-overlay"></div>
-        <!-- REPLACE 'your-photo.jpg' WITH HER ACTUAL IMAGE FILE NAME -->
+        
         <img src="Yon's Birthday.jpeg" alt="Yoninah" onerror="this.src='https://placehold.co/400x500/111/ff00ff?text=UPLOAD+IMAGE+HERE';">
         <div class="photo-caption">
           "CAPTURED: 1st July 2025<br>FILE SIZE: 6.4MB // <br>STATUS: PRICELESS"
@@ -256,7 +248,7 @@
     </div>
   </div>
 
-  <!-- AUDIO ELEMENTS -->
+ 
   <audio id="clickAudio" preload="auto">
     <source src="click.mp3" type="audio/mpeg">
   </audio>
@@ -268,7 +260,7 @@
   </audio>
 
   <script>
-    // Generate stars
+  
     const starfield = document.getElementById('starfield');
     for(let i=0; i<80; i++){
       const star = document.createElement('div');
@@ -282,7 +274,7 @@
 
     document.getElementById('date').textContent = new Date().toLocaleDateString();
 
-    // Cursor trail
+
     document.addEventListener('mousemove', (e) => {
       const trail = document.createElement('div');
       trail.className = 'cursor-trail';
@@ -296,7 +288,7 @@
       }, 200);
     });
 
-    // Audio functions
+    
     function playClickSound() {
       const clickPath = document.getElementById('clickSound').value;
       const audio = document.getElementById('clickAudio');
@@ -321,7 +313,7 @@
       audio.play().catch(e => console.log("Applause play failed"));
     }
 
-    // Poem data
+    
     const poem = [
       `I watch you soar through the world,\nVibrant, vivacious and endlessly bold,\nWith a spirit that refuses to let a single moment grow cold.\nEquipped with a quip for everything, \nYou're a running narrative of life that never loses its grip.`,
       `And when you speak? I'm caught in the awe of it all,\nListening to the way you make the grandest of ideas feel small enough to hold,\nAnd the smallest things feel grand.\nI am often lost in the muted tones and the shadows of doubt,\nwhile you hold a prism to the world's most mundane corners.\nYou don't just see the light; you find the marrow and the meaning,\nthe wild, unvarnished truth of life in every passing breath.`,
@@ -377,7 +369,6 @@
         fullContainer.appendChild(p);
       });
 
-      // Trigger confetti & play audio
       setTimeout(triggerConfetti, 500);
       playApplause();
     }
@@ -407,7 +398,7 @@
       }
     }
 
-    // Konami code easter egg
+   
     let konami = [];
     document.addEventListener('keydown', (e) => {
       konami.push(e.key);
